@@ -14,8 +14,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-
-
+  # https://pub.dev/packages/http
+  http: 0.12.2
+  
   cupertino_icons: ^1.0.0
 
 dev_dependencies:

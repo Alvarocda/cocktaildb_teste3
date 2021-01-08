@@ -19,6 +19,10 @@ class OptionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(color: Colors.black45, blurRadius: 3, spreadRadius: 1),
+        ],
         image: DecorationImage(
           image: backgroundImage,
           fit: BoxFit.fill,
@@ -28,7 +32,7 @@ class OptionTile extends StatelessWidget {
           onPressed: onPressed,
           child: BorderedText(
             title: title,
-            fontSize: 28,
+            fontSize: 25,
             textAlign: TextAlign.center,
             borderWidth: 7,
           )),

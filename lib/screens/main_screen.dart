@@ -1,3 +1,4 @@
+import 'package:app/screens/drink_type_list_screen.dart';
 import 'package:app/widgets/options_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -34,10 +35,16 @@ class _MainScreenState extends State<MainScreen> {
                       SizedBox(width: 10),
                       Expanded(
                         child: OptionTile(
-                          title: 'Não Alcoólicos',
+                          title: 'Não-alcoólicas',
                           backgroundImage:
                               AssetImage('images/non-alcoholic.jpg'),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute<DrinkTypeListScreen>(
+                                  builder: (BuildContext context) =>
+                                      DrinkTypeListScreen(DrinkType.category)),
+                            );
+                          },
                         ),
                       )
                     ],
@@ -45,8 +52,9 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 SizedBox(height: 10),
                 Expanded(
-                  child: ElevatedButton(
-                    child: Text('Categorias'),
+                  child: OptionTile(
+                    title: 'Categorias',
+                    backgroundImage: AssetImage('images/categories.jpg'),
                     onPressed: () {},
                   ),
                 ),
@@ -59,15 +67,28 @@ class _MainScreenState extends State<MainScreen> {
                         child: OptionTile(
                           title: 'Glasses',
                           backgroundImage: AssetImage('images/glasses.jpg'),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute<DrinkTypeListScreen>(
+                                  builder: (BuildContext context) =>
+                                      DrinkTypeListScreen(DrinkType.glass)),
+                            );
+                          },
                         ),
                       ),
-                      SizedBox(width: 5),
+                      SizedBox(width: 10),
                       Expanded(
                         child: OptionTile(
                           title: 'Ingredientes',
                           backgroundImage: AssetImage('images/ingredients.png'),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute<DrinkTypeListScreen>(
+                                  builder: (BuildContext context) =>
+                                      DrinkTypeListScreen(
+                                          DrinkType.ingredient)),
+                            );
+                          },
                         ),
                       )
                     ],
