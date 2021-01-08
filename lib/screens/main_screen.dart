@@ -1,3 +1,4 @@
+import 'package:app/widgets/options_tile.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -24,12 +25,20 @@ class _MainScreenState extends State<MainScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Expanded(
-                          child: ElevatedButton(
-                              onPressed: () {}, child: Text('Alcolicos'))),
+                        child: OptionTile(
+                          title: 'Alcoólicos',
+                          backgroundImage: AssetImage('images/alcoholic.jpg'),
+                          onPressed: () {},
+                        ),
+                      ),
                       SizedBox(width: 10),
                       Expanded(
-                        child: ElevatedButton(
-                            onPressed: () {}, child: Text('Não Alcolicos')),
+                        child: OptionTile(
+                          title: 'Não Alcoólicos',
+                          backgroundImage:
+                              AssetImage('images/non-alcoholic.jpg'),
+                          onPressed: () {},
+                        ),
                       )
                     ],
                   ),
@@ -47,12 +56,19 @@ class _MainScreenState extends State<MainScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Expanded(
-                          child: ElevatedButton(
-                              onPressed: () {}, child: Text('Glasses'))),
+                        child: OptionTile(
+                          title: 'Glasses',
+                          backgroundImage: AssetImage('images/glasses.jpg'),
+                          onPressed: () {},
+                        ),
+                      ),
                       SizedBox(width: 5),
                       Expanded(
-                        child: ElevatedButton(
-                            onPressed: () {}, child: Text('Ingredientes')),
+                        child: OptionTile(
+                          title: 'Ingredientes',
+                          backgroundImage: AssetImage('images/ingredients.png'),
+                          onPressed: () {},
+                        ),
                       )
                     ],
                   ),
