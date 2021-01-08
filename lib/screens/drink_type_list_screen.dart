@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 ///
 ///
 ///
-enum DrinkType { category, glass, ingredient }
+enum DrinkType { alcohol, category, glass, ingredient }
 
 ///
 ///
