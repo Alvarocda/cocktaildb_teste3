@@ -2,6 +2,8 @@ import 'package:app/models/api_response.dart';
 import 'package:app/models/drink.dart';
 import 'package:app/models/ingredient.dart';
 import 'package:app/utils/connection_utils.dart';
+import 'package:app/widgets/drink_detail.dart';
+import 'package:app/widgets/ingredient_list.dart';
 import 'package:app/widgets/loading.dart';
 import 'package:flutter/material.dart';
 
@@ -61,40 +63,18 @@ class _DrinkDetailScreenState extends State<DrinkDetailScreen> {
               if (snapshot.hasData) {
                 Drink drink = snapshot.data;
                 return Container(
+                  padding: EdgeInsets.all(5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Center(
-                        child: Image.network(drink.thumbPreview),
+                      DrinkDetail(
+                        drink: drink,
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        drink.name,
-                        style: TextStyle(fontSize: 26),
+                      SizedBox(
+                        height: 10,
                       ),
-                      Text('Categoria: ${drink.category}'),
-                      Text('Tipo: ${drink.alcoholic}'),
-                      Text('Glass: ${drink.glass}'),
-                      Text(
-                        'Ingredientes',
-                        style: TextStyle(fontSize: 18),
-                        textAlign: TextAlign.center,
-                      ),
-                      Expanded(
-                        child: ListView.separated(
-                          itemCount: drink.ingredientList.length,
-                          separatorBuilder: (BuildContext context, int index) =>
-                              Divider(),
-                          itemBuilder: (BuildContext context, int index) {
-                            Ingredient ingredient = drink.ingredientList[index];
-                            return ListTile(
-                              leading: Image.network(ingredient.thumb),
-                              title: Text(ingredient.name),
-                              subtitle:
-                                  Text('Quantiade: ${ingredient.measure}'),
-                            );
-                          },
-                        ),
+                      IngredientList(
+                        ingredientList: drink.ingredientList,
                       ),
                     ],
                   ),
