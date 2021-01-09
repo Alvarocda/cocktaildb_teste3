@@ -1,10 +1,18 @@
+import 'dart:async';
+
 import 'package:app/models/drink.dart';
+import 'package:app/widgets/drink_detail_info.dart';
+import 'package:app/widgets/loading.dart';
+import 'package:app/widgets/rating_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:rating_bar/rating_bar.dart';
+
+enum DrinkDetailStatus { viewing, sendingRate }
 
 ///
 ///
 ///
-class DrinkDetail extends StatelessWidget {
+class DrinkDetail extends StatefulWidget {
   final Drink drink;
 
   ///
@@ -16,41 +24,88 @@ class DrinkDetail extends StatelessWidget {
   ///
   ///
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Center(
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(drink.thumb),
-            radius: 100,
-          ),
-        ),
-        SizedBox(height: 10),
-        Center(
-          child: Text(
-            drink.name,
-            style: TextStyle(fontSize: 26),
-          ),
-        ),
-        Text('Categoria: ${drink.category}', style: _drinkDetailTextStyle()),
-        Text('Tipo: ${drink.alcoholic}', style: _drinkDetailTextStyle()),
-        Text('Glass: ${drink.glass}', style: _drinkDetailTextStyle()),
-        Text('Instruções de preparo: \n ${drink.instruction}',
-            style: _drinkDetailTextStyle()),
-        Text(
-          'Ingredientes',
-          style: TextStyle(fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
+  _DrinkDetailState createState() => _DrinkDetailState();
+}
+
+class _DrinkDetailState extends State<DrinkDetail> {
+  final StreamController<DrinkDetailStatus> _drinkDetailStatus =
+      StreamController<DrinkDetailStatus>();
+
+  @override
+  void initState() {
+    _drinkDetailStatus.add(DrinkDetailStatus.viewing);
+    super.initState();
   }
 
   ///
   ///
   ///
-  TextStyle _drinkDetailTextStyle() {
-    return TextStyle(fontSize: 18);
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<DrinkDetailStatus>(
+        stream: _drinkDetailStatus.stream,
+        builder:
+            (BuildContext context, AsyncSnapshot<DrinkDetailStatus> snapshot) {
+          print(snapshot.connectionState);
+          if (snapshot.connectionState == ConnectionState.active) {
+            switch (snapshot.data) {
+              case DrinkDetailStatus.viewing:
+                return Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Center(
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(widget.drink.thumb),
+                          radius: 100,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Center(
+                        child: Text(
+                          widget.drink.name,
+                          style: TextStyle(fontSize: 26),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      DrinkDetailInfo(
+                          label: 'Categoria: ', value: widget.drink.category),
+                      DrinkDetailInfo(
+                          label: 'Tipo: ', value: widget.drink.alcoholic),
+                      DrinkDetailInfo(
+                          label: 'Glass: ', value: widget.drink.glass),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text('Compartilhar'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          bool userRated =
+                              await RatingModal.show(context: context);
+                          if (userRated) {
+                            _drinkDetailStatus
+                                .add(DrinkDetailStatus.sendingRate);
+                            await Future.delayed(Duration(seconds: 5));
+                            _drinkDetailStatus.add(DrinkDetailStatus.viewing);
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Avaliação enviada com sucesso'),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text('Avaliar'),
+                      ),
+                    ],
+                  ),
+                );
+              case DrinkDetailStatus.sendingRate:
+                return Center(child: Loading(message: 'Enviando avaliação'));
+                break;
+            }
+          }
+          return Container();
+        });
   }
 }

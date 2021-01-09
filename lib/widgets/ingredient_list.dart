@@ -17,19 +17,17 @@ class IngredientList extends StatelessWidget {
   ///
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.separated(
-        itemCount: ingredientList.length,
-        separatorBuilder: (BuildContext context, int index) => Divider(),
-        itemBuilder: (BuildContext context, int index) {
-          Ingredient ingredient = ingredientList[index];
-          return ListTile(
-            leading: Image.network(ingredient.thumb),
-            title: Text(ingredient.name),
-            subtitle: Text('Quantiade: ${ingredient.measure}'),
-          );
-        },
-      ),
+    return ListView.separated(
+      itemCount: ingredientList.length,
+      separatorBuilder: (BuildContext context, int index) => Divider(),
+      itemBuilder: (BuildContext context, int index) {
+        Ingredient ingredient = ingredientList[index];
+        return ListTile(
+          leading: Image.network(ingredient.thumb),
+          title: Text(ingredient.name),
+          subtitle: Text('Quantiade: ${ingredient.measure}'),
+        );
+      },
     );
   }
 }

@@ -12,7 +12,6 @@ class ConnectionUtils {
   ///
   Future<ApiResponse> get(String endpoint) async {
     String url = '$_baseUrl$endpoint';
-    print(url);
     var response = await http.get(url);
     return ApiResponse(
         rawResponse: response.body, statusCode: response.statusCode);

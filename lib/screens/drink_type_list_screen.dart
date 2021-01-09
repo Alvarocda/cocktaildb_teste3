@@ -64,7 +64,6 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
     if (apiResponse != null && apiResponse.statusCode == 200) {
       List<EntityBase> entities = List<EntityBase>();
       for (dynamic option in apiResponse.jsonObject['drinks']) {
-        print(option);
         switch (widget.drinkType) {
           case DrinkType.alcohol:
             entities.add(Alcohol.fromMap(option));
@@ -99,8 +98,6 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
           future: _getDrinksTypes(),
           builder:
               (BuildContext context, AsyncSnapshot<List<EntityBase>> snapshot) {
-            print(snapshot.connectionState);
-            print(snapshot.hasData);
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
                 return ListView.builder(

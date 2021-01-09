@@ -3,6 +3,7 @@ import 'package:app/models/drink.dart';
 import 'package:app/screens/drink_detail_screen.dart';
 import 'package:app/screens/drink_type_list_screen.dart';
 import 'package:app/utils/connection_utils.dart';
+import 'package:app/widgets/drink_list_tile.dart';
 import 'package:app/widgets/loading.dart';
 import 'package:flutter/material.dart';
 
@@ -76,16 +77,13 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
           builder: (BuildContext context, AsyncSnapshot<List<Drink>> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
-                return ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(),
+                return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
                     Drink drink = snapshot.data[index];
-                    return ListTile(
-                      leading: Image.network(drink.thumbPreview),
-                      title: Text(drink.name),
-                      onTap: () {
+                    return DrinkListTile(
+                      drink: drink,
+                      onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (BuildContext context) =>
                                 DrinkDetailScreen(

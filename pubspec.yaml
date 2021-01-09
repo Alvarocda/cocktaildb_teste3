@@ -16,6 +16,8 @@ dependencies:
 
   # https://pub.dev/packages/http
   http: 0.12.2
+  # https://pub.dev/packages/rating_bar/install
+  rating_bar: 0.2.0
   
   cupertino_icons: ^1.0.0
 
