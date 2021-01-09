@@ -1,4 +1,5 @@
 import 'package:app/models/drink.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 ///
@@ -24,7 +25,7 @@ class DrinkListTile extends StatelessWidget {
         child: ListTile(
           onTap: onPressed,
           leading: CircleAvatar(
-            backgroundImage: NetworkImage(drink.thumbPreview),
+            backgroundImage: CachedNetworkImageProvider(drink.thumbPreview),
             radius: 25,
           ),
           title: Text(

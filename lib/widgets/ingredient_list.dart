@@ -1,4 +1,5 @@
 import 'package:app/models/ingredient.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 ///
@@ -23,7 +24,10 @@ class IngredientList extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         Ingredient ingredient = ingredientList[index];
         return ListTile(
-          leading: Image.network(ingredient.thumb),
+          leading: CachedNetworkImage(
+            imageUrl: ingredient.thumb,
+            placeholder: (context, url) => CircularProgressIndicator(),
+          ),
           title: Text(ingredient.name),
           subtitle: Text('Quantiade: ${ingredient.measure}'),
         );

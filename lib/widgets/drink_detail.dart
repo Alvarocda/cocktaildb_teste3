@@ -4,6 +4,7 @@ import 'package:app/models/drink.dart';
 import 'package:app/widgets/drink_detail_info.dart';
 import 'package:app/widgets/loading.dart';
 import 'package:app/widgets/rating_modal.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:rating_bar/rating_bar.dart';
 
@@ -49,18 +50,39 @@ class _DrinkDetailState extends State<DrinkDetail> {
           print(snapshot.connectionState);
           if (snapshot.connectionState == ConnectionState.active) {
             switch (snapshot.data) {
+
+              ///
+              ///
+              ///
               case DrinkDetailStatus.viewing:
                 return Container(
                   padding: EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Center(
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(widget.drink.thumb),
-                          radius: 100,
-                        ),
+                      CachedNetworkImage(
+                        imageUrl: widget.drink.thumb,
+                        progressIndicatorBuilder: (BuildContext context,
+                            String url, DownloadProgress progress) {
+                          return Center(child: CircularProgressIndicator());
+                        },
+                        imageBuilder: (BuildContext context,
+                            ImageProvider imageProvider) {
+                          return Center(
+                            child: CircleAvatar(
+                              backgroundImage: imageProvider,
+                              radius: 100,
+                            ),
+                          );
+                        },
                       ),
+                      // Center(
+                      //   child: CircleAvatar(
+                      //     backgroundImage:
+                      //         CachedNetworkImageProvider(widget.drink.thumb),
+                      //     radius: 100,
+                      //   ),
+                      //),
                       SizedBox(height: 10),
                       Center(
                         child: Text(
@@ -77,7 +99,14 @@ class _DrinkDetailState extends State<DrinkDetail> {
                           label: 'Glass: ', value: widget.drink.glass),
                       ElevatedButton(
                         onPressed: () {},
-                        child: Text('Compartilhar'),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Compartilhar'),
+                            SizedBox(width: 10),
+                            Icon(Icons.share),
+                          ],
+                        ),
                       ),
                       ElevatedButton(
                         onPressed: () async {
@@ -95,17 +124,37 @@ class _DrinkDetailState extends State<DrinkDetail> {
                             );
                           }
                         },
-                        child: Text('Avaliar'),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Avaliar'),
+                            SizedBox(width: 10),
+                            Icon(Icons.star),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 );
+
+              ///
+              ///
+              ///
               case DrinkDetailStatus.sendingRate:
-                return Center(child: Loading(message: 'Enviando avaliação'));
+                return Loading(message: 'Enviando avaliação');
                 break;
             }
           }
           return Container();
         });
+  }
+
+  ///
+  ///
+  ///
+  @override
+  void dispose() {
+    _drinkDetailStatus.close();
+    super.dispose();
   }
 }
