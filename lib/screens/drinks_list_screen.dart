@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:app/models/api_response.dart';
 import 'package:app/models/drink.dart';
 import 'package:app/screens/drink_detail_screen.dart';
 import 'package:app/screens/drink_type_list_screen.dart';
 import 'package:app/utils/connection_utils.dart';
 import 'package:app/widgets/drink_list_tile.dart';
+import 'package:app/widgets/filter_textfield.dart';
 import 'package:app/widgets/loading.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +34,13 @@ class DrinkListScreen extends StatefulWidget {
 ///
 ///
 class _DrinkListScreenState extends State<DrinkListScreen> {
+  List<Drink> _drinkList;
+  final StreamController<List<Drink>> _filteredDrinkListStream =
+      StreamController<List<Drink>>();
+
+  ///
+  ///
+  ///
   Future<List<Drink>> _getDrinksList() async {
     ConnectionUtils connectionUtils = ConnectionUtils();
     ApiResponse apiResponse;
@@ -53,11 +63,12 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
         break;
     }
     if (apiResponse != null && apiResponse.statusCode == 200) {
-      List<Drink> drinks = List<Drink>();
+      _drinkList = List<Drink>();
       for (dynamic drinkData in apiResponse.jsonObject['drinks']) {
-        drinks.add(Drink.fromMap(drinkData));
+        _drinkList.add(Drink.fromMap(drinkData));
       }
-      return drinks;
+      _filteredDrinkListStream.add(_drinkList);
+      return _drinkList;
     }
     return null;
   }
@@ -77,24 +88,56 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
           builder: (BuildContext context, AsyncSnapshot<List<Drink>> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Drink drink = snapshot.data[index];
-                    return DrinkListTile(
-                      drink: drink,
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                DrinkDetailScreen(
-                              drink: drink,
-                            ),
-                          ),
-                        );
+                return Column(
+                  children: <Widget>[
+                    FilterTextField(
+                      onChanged: (String value) {
+                        if (value != null && value.isNotEmpty) {
+                          _filteredDrinkListStream.add(_drinkList
+                              .where((Drink element) =>
+                                  element.name.toLowerCase().contains(value))
+                              .toList());
+                        } else {
+                          _filteredDrinkListStream.add(_drinkList);
+                        }
                       },
-                    );
-                  },
+                    ),
+                    Expanded(
+                      child: StreamBuilder<List<Drink>>(
+                        stream: _filteredDrinkListStream.stream,
+                        builder: (BuildContext streamContext,
+                            AsyncSnapshot<List<Drink>> streamSnapshot) {
+                          if (streamSnapshot.hasData) {
+                            if (streamSnapshot.data.isEmpty) {
+                              return Center(
+                                  child: Text(
+                                      'Nenhum drink encontrado com o termo informado =('));
+                            }
+                            return ListView.builder(
+                              itemCount: streamSnapshot.data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                Drink drink = streamSnapshot.data[index];
+                                return DrinkListTile(
+                                  drink: drink,
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            DrinkDetailScreen(
+                                          drink: drink,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
+                          }
+                          return Container();
+                        },
+                      ),
+                    ),
+                  ],
                 );
               }
             }
