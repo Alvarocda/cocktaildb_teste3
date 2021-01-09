@@ -67,64 +67,6 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ],
         ),
-        // body: Container(
-        //   padding: EdgeInsets.all(5),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.stretch,
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: <Widget>[
-        //       Row(
-        //         children: <Widget>[
-        //           OptionTile(
-        //             title: 'Alcoólicos',
-        //             backgroundImage: AssetImage('images/alcoholic.jpg'),
-        //             onPressed: () {},
-        //           ),
-        //           SizedBox(width: 10),
-        //           Expanded(
-        //             child: OptionTile(
-        //               title: 'Categorias',
-        //               backgroundImage: AssetImage('images/categories.jpg'),
-        //               onPressed: () {},
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //       SizedBox(height: 10),
-        //       Row(
-        //         children: <Widget>[
-        //           Expanded(
-        //             child: OptionTile(
-        //               title: 'Glasses',
-        //               backgroundImage: AssetImage('images/glasses.jpg'),
-        //               onPressed: () {
-        //                 Navigator.of(context).push(
-        //                   MaterialPageRoute<DrinkTypeListScreen>(
-        //                       builder: (BuildContext context) =>
-        //                           DrinkTypeListScreen(DrinkType.glass)),
-        //                 );
-        //               },
-        //             ),
-        //           ),
-        //           SizedBox(width: 10),
-        //           Expanded(
-        //             child: OptionTile(
-        //               title: 'Ingredientes',
-        //               backgroundImage: AssetImage('images/ingredients.png'),
-        //               onPressed: () {
-        //                 Navigator.of(context).push(
-        //                   MaterialPageRoute<DrinkTypeListScreen>(
-        //                       builder: (BuildContext context) =>
-        //                           DrinkTypeListScreen(DrinkType.ingredient)),
-        //                 );
-        //               },
-        //             ),
-        //           )
-        //         ],
-        //       )
-        //     ],
-        //   ),
-        // ),
       ),
     );
   }

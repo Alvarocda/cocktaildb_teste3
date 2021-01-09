@@ -8,6 +8,9 @@ class BorderedText extends StatelessWidget {
   final double borderWidth;
   final TextAlign textAlign;
 
+  ///
+  ///
+  ///
   const BorderedText(
       {this.textColor = Colors.white,
       this.textAlign,
@@ -18,6 +21,9 @@ class BorderedText extends StatelessWidget {
       Key key})
       : super(key: key);
 
+  ///
+  ///
+  ///
   @override
   Widget build(BuildContext context) {
     return Stack(

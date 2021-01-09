@@ -18,9 +18,4 @@ class Ingredient extends EntityBase {
   Ingredient.fromMap(Map<String, dynamic> map) {
     name = map['strIngredient1'];
   }
-
-  Ingredient.fromDrink(Map<String, dynamic> map, int index) {
-    name = map['strIngredient$index}'];
-    measure = map['strMeasure$index}'];
-  }
 }

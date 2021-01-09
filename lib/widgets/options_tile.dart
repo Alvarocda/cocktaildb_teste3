@@ -15,6 +15,9 @@ class OptionTile extends StatelessWidget {
   const OptionTile({this.backgroundImage, this.onPressed, this.title, Key key})
       : super(key: key);
 
+  ///
+  ///
+  ///
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,13 +32,14 @@ class OptionTile extends StatelessWidget {
         ),
       ),
       child: FlatButton(
-          onPressed: onPressed,
-          child: BorderedText(
-            title: title,
-            fontSize: 24,
-            textAlign: TextAlign.center,
-            borderWidth: 5,
-          )),
+        onPressed: onPressed,
+        child: BorderedText(
+          title: title,
+          fontSize: 24,
+          textAlign: TextAlign.center,
+          borderWidth: 5,
+        ),
+      ),
     );
   }
 }

@@ -38,6 +38,9 @@ class Drink {
     thumbPreview = '$thumb/preview';
   }
 
+  ///
+  ///
+  ///
   Drink.fromDrinkDetailMap(Map<String, dynamic> map) {
     id = int.parse(map['idDrink'] as String);
     name = map['strDrink'];
@@ -48,7 +51,7 @@ class Drink {
     glass = map['strGlass'];
     instruction = map['strInstructions'];
     ingredientList = List<Ingredient>();
-    for (int index = 1; index < 10; index++) {
+    for (int index = 1; index <= 15; index++) {
       Ingredient ingredient = Ingredient();
       ingredient.name = map['strIngredient$index'];
       if (ingredient.name == null) {
