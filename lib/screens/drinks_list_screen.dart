@@ -84,11 +84,14 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
                     return DrinkListTile(
                       drink: drink,
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
                             builder: (BuildContext context) =>
                                 DrinkDetailScreen(
-                                  drink: drink,
-                                )));
+                              drink: drink,
+                            ),
+                          ),
+                        );
                       },
                     );
                   },

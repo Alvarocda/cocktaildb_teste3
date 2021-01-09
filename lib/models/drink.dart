@@ -54,7 +54,7 @@ class Drink {
     for (int index = 1; index <= 15; index++) {
       Ingredient ingredient = Ingredient();
       ingredient.name = map['strIngredient$index'];
-      if (ingredient.name == null) {
+      if (ingredient.name == null || ingredient.name.isEmpty) {
         continue;
       }
       ingredient.measure = map['strMeasure$index'];

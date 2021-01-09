@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app/models/alcohol.dart';
 import 'package:app/models/api_response.dart';
 import 'package:app/models/category.dart';
@@ -6,6 +8,7 @@ import 'package:app/models/glass.dart';
 import 'package:app/models/ingredient.dart';
 import 'package:app/screens/drinks_list_screen.dart';
 import 'package:app/utils/connection_utils.dart';
+import 'package:app/widgets/filter_textfield.dart';
 import 'package:app/widgets/loading.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +39,10 @@ class DrinkTypeListScreen extends StatefulWidget {
 ///
 ///
 class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
+  List<EntityBase> _drinkTypeList;
+  final StreamController<List<EntityBase>> _filteredResults =
+      StreamController<List<EntityBase>>();
+
   ///
   ///
   ///
@@ -62,24 +69,26 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
     }
 
     if (apiResponse != null && apiResponse.statusCode == 200) {
-      List<EntityBase> entities = List<EntityBase>();
+      List<EntityBase> drinkTypeList = List<EntityBase>();
       for (dynamic option in apiResponse.jsonObject['drinks']) {
         switch (widget.drinkType) {
           case DrinkType.alcohol:
-            entities.add(Alcohol.fromMap(option));
+            drinkTypeList.add(Alcohol.fromMap(option));
             break;
           case DrinkType.category:
-            entities.add(Category.fromMap(option));
+            drinkTypeList.add(Category.fromMap(option));
             break;
           case DrinkType.glass:
-            entities.add(Glass.fromMap(option));
+            drinkTypeList.add(Glass.fromMap(option));
             break;
           case DrinkType.ingredient:
-            entities.add(Ingredient.fromMap(option));
+            drinkTypeList.add(Ingredient.fromMap(option));
             break;
         }
       }
-      return entities;
+      _drinkTypeList = drinkTypeList;
+      _filteredResults.add(drinkTypeList);
+      return drinkTypeList;
     }
     return null;
   }
@@ -100,25 +109,74 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
               (BuildContext context, AsyncSnapshot<List<EntityBase>> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    EntityBase option = snapshot.data[index];
-                    return ListTile(
-                      title: Text(option.name),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => DrinkListScreen(
-                              drinkType: widget.drinkType,
-                              typeName: option.name,
-                            ),
-                          ),
-                        );
+                return Column(
+                  children: <Widget>[
+                    FilterTextField(
+                      onChanged: (String value) {
+                        if (value != null && value.isNotEmpty) {
+                          _filteredResults.add(_drinkTypeList
+                              .where((EntityBase element) =>
+                                  element.name.toLowerCase().contains(value))
+                              .toList());
+                        } else {
+                          _filteredResults.add(_drinkTypeList);
+                        }
                       },
-                    );
-                  },
+                    ),
+                    Expanded(
+                      child: StreamBuilder<List<EntityBase>>(
+                        stream: _filteredResults.stream,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<EntityBase>> filteredSnapshot) {
+                          if (filteredSnapshot.hasData) {
+                            return ListView.builder(
+                              itemCount: filteredSnapshot.data.length,
+                              itemBuilder:
+                                  (BuildContext filterContext, int index) {
+                                EntityBase option =
+                                    filteredSnapshot.data[index];
+                                return ListTile(
+                                    title: Text(option.name),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              DrinkListScreen(
+                                            drinkType: widget.drinkType,
+                                            typeName: option.name,
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              },
+                            );
+                          }
+                          return Container();
+                        },
+                      ),
+                    )
+                  ],
                 );
+                return StreamBuilder(builder: null);
+                // return ListView.builder(
+                //   itemCount: snapshot.data.length,
+                //   itemBuilder: (BuildContext context, int index) {
+                //     EntityBase option = snapshot.data[index];
+                //     return ListTile(
+                //       title: Text(option.name),
+                //       onTap: () {
+                //         Navigator.of(context).push(
+                //           MaterialPageRoute(
+                //             builder: (BuildContext context) => DrinkListScreen(
+                //               drinkType: widget.drinkType,
+                //               typeName: option.name,
+                //             ),
+                //           ),
+                //         );
+                //       },
+                //     );
+                //   },
+                // );
               }
             }
             return Loading(

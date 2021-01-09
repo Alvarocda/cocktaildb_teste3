@@ -29,7 +29,8 @@ class IngredientList extends StatelessWidget {
             placeholder: (context, url) => CircularProgressIndicator(),
           ),
           title: Text(ingredient.name),
-          subtitle: Text('Quantiade: ${ingredient.measure}'),
+          subtitle: Text(
+              'Quantiade: ${ingredient.measure == null ? 'A gosto' : ingredient.measure}'),
         );
       },
     );

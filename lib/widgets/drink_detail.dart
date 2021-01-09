@@ -55,6 +55,7 @@ class _DrinkDetailState extends State<DrinkDetail> {
               ///
               ///
               case DrinkDetailStatus.viewing:
+                print(widget.drink.id);
                 return Container(
                   padding: EdgeInsets.all(10),
                   child: Column(
