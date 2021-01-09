@@ -1,5 +1,6 @@
 import 'package:app/models/api_response.dart';
 import 'package:app/models/drink.dart';
+import 'package:app/screens/drink_detail_screen.dart';
 import 'package:app/screens/drink_type_list_screen.dart';
 import 'package:app/utils/connection_utils.dart';
 import 'package:app/widgets/loading.dart';
@@ -67,7 +68,9 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('Drinks'),
+        ),
         body: FutureBuilder<List<Drink>>(
           future: _getDrinksList(),
           builder: (BuildContext context, AsyncSnapshot<List<Drink>> snapshot) {
@@ -82,6 +85,13 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
                     return ListTile(
                       leading: Image.network(drink.thumbPreview),
                       title: Text(drink.name),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                DrinkDetailScreen(
+                                  drink: drink,
+                                )));
+                      },
                     );
                   },
                 );
