@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+///
+///
+///
 class BorderedText extends StatelessWidget {
   final String title;
   final double fontSize;

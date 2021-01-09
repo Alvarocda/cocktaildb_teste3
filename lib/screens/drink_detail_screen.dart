@@ -1,6 +1,5 @@
 import 'package:app/models/api_response.dart';
 import 'package:app/models/drink.dart';
-import 'package:app/models/ingredient.dart';
 import 'package:app/utils/connection_utils.dart';
 import 'package:app/widgets/drink_detail.dart';
 import 'package:app/widgets/ingredient_list.dart';

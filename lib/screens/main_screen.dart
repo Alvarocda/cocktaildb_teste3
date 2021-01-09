@@ -2,12 +2,24 @@ import 'package:app/screens/drink_type_list_screen.dart';
 import 'package:app/widgets/options_tile.dart';
 import 'package:flutter/material.dart';
 
+///
+///
+///
 class MainScreen extends StatefulWidget {
+  ///
+  ///
+  ///
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
+///
+///
+///
 class _MainScreenState extends State<MainScreen> {
+  ///
+  ///
+  ///
   @override
   Widget build(BuildContext context) {
     return SafeArea(
