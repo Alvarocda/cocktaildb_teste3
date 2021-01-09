@@ -14,5 +14,6 @@ class Alcohol extends EntityBase {
   ///
   Alcohol.fromMap(Map<String, dynamic> map) {
     name = map['strAlcoholic'];
+    print(name);
   }
 }

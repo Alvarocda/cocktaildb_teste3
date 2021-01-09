@@ -32,9 +32,9 @@ class OptionTile extends StatelessWidget {
           onPressed: onPressed,
           child: BorderedText(
             title: title,
-            fontSize: 25,
+            fontSize: 24,
             textAlign: TextAlign.center,
-            borderWidth: 7,
+            borderWidth: 5,
           )),
     );
   }
