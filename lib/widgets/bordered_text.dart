@@ -20,9 +20,7 @@ class BorderedText extends StatelessWidget {
       this.fontSize,
       this.borderWidth = 5,
       this.borderColor = Colors.black,
-      this.title,
-      Key key})
-      : super(key: key);
+      this.title});
 
   ///
   ///

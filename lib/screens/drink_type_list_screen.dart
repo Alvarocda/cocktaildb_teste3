@@ -112,6 +112,7 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
                 return Column(
                   children: <Widget>[
                     FilterTextField(
+                      key: Key('search-field'),
                       onChanged: (String value) {
                         if (value != null && value.isNotEmpty) {
                           _filteredResults.add(_drinkTypeList

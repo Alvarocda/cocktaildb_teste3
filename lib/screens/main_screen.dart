@@ -46,6 +46,7 @@ class _MainScreenState extends State<MainScreen> {
                 mainAxisSpacing: 10,
                 children: <Widget>[
                   OptionTile(
+                    key: Key('Classificação'),
                     title: 'Classificação',
                     backgroundImage: AssetImage('images/alcoholic.jpg'),
                     onPressed: () {

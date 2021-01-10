@@ -47,7 +47,6 @@ class _DrinkDetailState extends State<DrinkDetail> {
         stream: _drinkDetailStatus.stream,
         builder:
             (BuildContext context, AsyncSnapshot<DrinkDetailStatus> snapshot) {
-          print(snapshot.connectionState);
           if (snapshot.connectionState == ConnectionState.active) {
             switch (snapshot.data) {
 
@@ -55,7 +54,6 @@ class _DrinkDetailState extends State<DrinkDetail> {
               ///
               ///
               case DrinkDetailStatus.viewing:
-                print(widget.drink.id);
                 return Container(
                   padding: EdgeInsets.all(10),
                   child: Column(

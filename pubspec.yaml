@@ -20,6 +20,8 @@ dependencies:
   rating_bar: 0.2.0
   # https://pub.dev/packages/cached_network_image/install
   cached_network_image: 2.5.0
+  # https://pub.dev/packages/integration_test/install
+  integration_test: 1.0.1
   
   cupertino_icons: ^1.0.0
 
