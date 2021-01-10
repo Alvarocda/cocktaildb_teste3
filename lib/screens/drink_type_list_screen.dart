@@ -157,26 +157,6 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
                     )
                   ],
                 );
-                return StreamBuilder(builder: null);
-                // return ListView.builder(
-                //   itemCount: snapshot.data.length,
-                //   itemBuilder: (BuildContext context, int index) {
-                //     EntityBase option = snapshot.data[index];
-                //     return ListTile(
-                //       title: Text(option.name),
-                //       onTap: () {
-                //         Navigator.of(context).push(
-                //           MaterialPageRoute(
-                //             builder: (BuildContext context) => DrinkListScreen(
-                //               drinkType: widget.drinkType,
-                //               typeName: option.name,
-                //             ),
-                //           ),
-                //         );
-                //       },
-                //     );
-                //   },
-                // );
               }
             }
             return Loading(

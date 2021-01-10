@@ -24,9 +24,15 @@ class DrinkListTile extends StatelessWidget {
       child: Card(
         child: ListTile(
           onTap: onPressed,
-          leading: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(drink.thumbPreview),
-            radius: 25,
+          leading: CachedNetworkImage(
+            imageUrl: drink.thumbPreview,
+            placeholder: (BuildContext context, String url) =>
+                CircularProgressIndicator(),
+            imageBuilder: (BuildContext context, ImageProvider imageProvider) =>
+                CircleAvatar(
+              backgroundImage: imageProvider,
+              radius: 25,
+            ),
           ),
           title: Text(
             drink.name,

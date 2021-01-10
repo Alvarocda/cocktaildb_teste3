@@ -29,13 +29,14 @@ class OptionTile extends StatelessWidget {
         image: DecorationImage(
           image: backgroundImage,
           fit: BoxFit.fill,
+          scale: MediaQuery.of(context).size.width * 0.06,
         ),
       ),
       child: FlatButton(
         onPressed: onPressed,
         child: BorderedText(
           title: title,
-          fontSize: 24,
+          fontSize: MediaQuery.of(context).size.width * 0.06,
           textAlign: TextAlign.center,
           borderWidth: 5,
         ),

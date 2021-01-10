@@ -77,13 +77,6 @@ class _DrinkDetailState extends State<DrinkDetail> {
                           );
                         },
                       ),
-                      // Center(
-                      //   child: CircleAvatar(
-                      //     backgroundImage:
-                      //         CachedNetworkImageProvider(widget.drink.thumb),
-                      //     radius: 100,
-                      //   ),
-                      //),
                       SizedBox(height: 10),
                       Center(
                         child: Text(
@@ -95,9 +88,10 @@ class _DrinkDetailState extends State<DrinkDetail> {
                       DrinkDetailInfo(
                           label: 'Categoria: ', value: widget.drink.category),
                       DrinkDetailInfo(
-                          label: 'Tipo: ', value: widget.drink.alcoholic),
+                          label: 'Classificação: ',
+                          value: widget.drink.alcoholic),
                       DrinkDetailInfo(
-                          label: 'Glass: ', value: widget.drink.glass),
+                          label: 'Tipo de copo: ', value: widget.drink.glass),
                       ElevatedButton(
                         onPressed: () {},
                         child: Row(
