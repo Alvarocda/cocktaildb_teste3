@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app/abstract/abstract_connection.dart';
 import 'package:app/models/alcohol.dart';
 import 'package:app/models/api_response.dart';
 import 'package:app/models/category.dart';
@@ -22,11 +23,13 @@ enum DrinkType { alcohol, category, glass, ingredient }
 ///
 class DrinkTypeListScreen extends StatefulWidget {
   final DrinkType drinkType;
+  final AbstractConnection connectionUtils;
 
   ///
   ///
   ///
-  const DrinkTypeListScreen(this.drinkType, {Key key}) : super(key: key);
+  const DrinkTypeListScreen(this.drinkType, {this.connectionUtils, Key key})
+      : super(key: key);
 
   ///
   ///
@@ -47,21 +50,20 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
   ///
   ///
   Future<List<EntityBase>> _getDrinksTypes() async {
-    ConnectionUtils connectionUtils = ConnectionUtils();
     ApiResponse apiResponse;
     try {
       switch (widget.drinkType) {
         case DrinkType.category:
-          apiResponse = await connectionUtils.get('list.php?c=list');
+          apiResponse = await widget.connectionUtils.get('list.php?c=list');
           break;
         case DrinkType.glass:
-          apiResponse = await connectionUtils.get('list.php?g=list');
+          apiResponse = await widget.connectionUtils.get('list.php?g=list');
           break;
         case DrinkType.ingredient:
-          apiResponse = await connectionUtils.get('list.php?i=list');
+          apiResponse = await widget.connectionUtils.get('list.php?i=list');
           break;
         case DrinkType.alcohol:
-          apiResponse = await connectionUtils.get('list.php?a=list');
+          apiResponse = await widget.connectionUtils.get('list.php?a=list');
           break;
       }
     } catch (err) {

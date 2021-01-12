@@ -3,3 +3,5 @@ https://www.youtube.com/watch?v=izajHHFSa8o
 https://dev.to/cddelta/signing-flutter-android-apps-for-release-in-github-actions-2892
 
 https://medium.com/@jmellodev/flutter-debug-por-wifi-435d508a09cf
+
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart

@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:app/abstract/abstract_connection.dart';
 import 'package:app/models/api_response.dart';
 import 'package:app/models/drink.dart';
 import 'package:app/screens/drink_detail_screen.dart';
 import 'package:app/screens/drink_type_list_screen.dart';
-import 'package:app/utils/connection_utils.dart';
 import 'package:app/widgets/drink_list_tile.dart';
 import 'package:app/widgets/filter_textfield.dart';
 import 'package:app/widgets/loading.dart';
@@ -16,11 +16,13 @@ import 'package:flutter/material.dart';
 class DrinkListScreen extends StatefulWidget {
   final DrinkType drinkType;
   final String typeName;
+  final AbstractConnection connectionUtils;
 
   ///
   ///
   ///
-  const DrinkListScreen({this.drinkType, this.typeName, Key key})
+  const DrinkListScreen(
+      {this.drinkType, this.typeName, this.connectionUtils, Key key})
       : super(key: key);
 
   ///
@@ -42,24 +44,23 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
   ///
   ///
   Future<List<Drink>> _getDrinksList() async {
-    ConnectionUtils connectionUtils = ConnectionUtils();
     ApiResponse apiResponse;
     switch (widget.drinkType) {
       case DrinkType.alcohol:
         apiResponse =
-            await connectionUtils.get('filter.php?a=${widget.typeName}');
+            await widget.connectionUtils.get('filter.php?a=${widget.typeName}');
         break;
       case DrinkType.category:
         apiResponse =
-            await connectionUtils.get('filter.php?c=${widget.typeName}');
+            await widget.connectionUtils.get('filter.php?c=${widget.typeName}');
         break;
       case DrinkType.glass:
         apiResponse =
-            await connectionUtils.get('filter.php?g=${widget.typeName}');
+            await widget.connectionUtils.get('filter.php?g=${widget.typeName}');
         break;
       case DrinkType.ingredient:
         apiResponse =
-            await connectionUtils.get('filter.php?i=${widget.typeName}');
+            await widget.connectionUtils.get('filter.php?i=${widget.typeName}');
         break;
     }
     if (apiResponse != null && apiResponse.statusCode == 200) {

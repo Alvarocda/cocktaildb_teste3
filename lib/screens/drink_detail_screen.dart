@@ -1,3 +1,4 @@
+import 'package:app/abstract/abstract_connection.dart';
 import 'package:app/models/api_response.dart';
 import 'package:app/models/drink.dart';
 import 'package:app/utils/connection_utils.dart';
@@ -12,11 +13,13 @@ import 'package:rating_bar/rating_bar.dart';
 ///
 class DrinkDetailScreen extends StatefulWidget {
   final Drink drink;
+  final AbstractConnection connectionUtils;
 
   ///
   ///
   ///
-  const DrinkDetailScreen({this.drink, Key key}) : super(key: key);
+  const DrinkDetailScreen({this.drink, this.connectionUtils, Key key})
+      : super(key: key);
 
   ///
   ///
@@ -30,11 +33,10 @@ class DrinkDetailScreen extends StatefulWidget {
 ///
 class _DrinkDetailScreenState extends State<DrinkDetailScreen> {
   Future<Drink> _getDrinkDetail() async {
-    ConnectionUtils connectionUtils = ConnectionUtils();
     ApiResponse apiResponse;
     try {
       apiResponse =
-          await connectionUtils.get('lookup.php?i=${widget.drink.id}');
+          await widget.connectionUtils.get('lookup.php?i=${widget.drink.id}');
       if (apiResponse.statusCode == 200) {
         return Drink.fromDrinkDetailMap(apiResponse.jsonObject['drinks'][0]);
       }

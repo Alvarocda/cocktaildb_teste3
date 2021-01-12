@@ -1,12 +1,17 @@
 import 'package:app/screens/main_screen.dart';
+import 'package:app/utils/api_resource.dart';
+import 'package:app/utils/connection_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:http/testing.dart';
+import 'package:http/http.dart';
 
-void main() {
+void main({ConnectionUtils connectionUtils}) {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  const MyApp();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

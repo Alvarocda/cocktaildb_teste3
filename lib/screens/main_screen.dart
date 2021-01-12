@@ -1,12 +1,22 @@
+import 'package:app/abstract/abstract_connection.dart';
 import 'package:app/models/config.dart';
 import 'package:app/screens/drink_type_list_screen.dart';
+import 'package:app/utils/connection_utils.dart';
 import 'package:app/widgets/options_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 ///
 ///
 ///
 class MainScreen extends StatefulWidget {
+  final AbstractConnection connection;
+
+  ///
+  ///
+  ///
+  const MainScreen({this.connection, Key key}) : super(key: key);
+
   ///
   ///
   ///
@@ -19,6 +29,7 @@ class MainScreen extends StatefulWidget {
 ///
 class _MainScreenState extends State<MainScreen> {
   Config _config;
+  AbstractConnection connection;
 
   ///
   ///
@@ -52,41 +63,56 @@ class _MainScreenState extends State<MainScreen> {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<DrinkTypeListScreen>(
-                            builder: (BuildContext context) =>
-                                DrinkTypeListScreen(DrinkType.alcohol)),
+                          builder: (BuildContext context) =>
+                              DrinkTypeListScreen(
+                            DrinkType.alcohol,
+                            connectionUtils: connection,
+                          ),
+                        ),
                       );
                     },
                   ),
                   OptionTile(
+                    key: Key('Categoria'),
                     title: 'Categoria',
                     backgroundImage: AssetImage('images/categories.jpg'),
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<DrinkTypeListScreen>(
-                            builder: (BuildContext context) =>
-                                DrinkTypeListScreen(DrinkType.category)),
+                          builder: (BuildContext context) =>
+                              DrinkTypeListScreen(
+                            DrinkType.category,
+                            connectionUtils: connection,
+                          ),
+                        ),
                       );
                     },
                   ),
                   OptionTile(
+                    key: Key('Copo'),
                     title: 'Copo',
                     backgroundImage: AssetImage('images/glasses.jpg'),
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<DrinkTypeListScreen>(
-                            builder: (BuildContext context) =>
-                                DrinkTypeListScreen(DrinkType.glass)),
+                          builder: (BuildContext context) =>
+                              DrinkTypeListScreen(DrinkType.glass,
+                                  connectionUtils: connection),
+                        ),
                       );
                     },
                   ),
                   OptionTile(
+                    key: Key('Ingrediente'),
                     title: 'Ingrediente',
                     backgroundImage: AssetImage('images/ingredients.png'),
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<DrinkTypeListScreen>(
-                            builder: (BuildContext context) =>
-                                DrinkTypeListScreen(DrinkType.ingredient)),
+                          builder: (BuildContext context) =>
+                              DrinkTypeListScreen(DrinkType.ingredient,
+                                  connectionUtils: connection),
+                        ),
                       );
                     },
                   ),
@@ -104,6 +130,9 @@ class _MainScreenState extends State<MainScreen> {
   ///
   @override
   void initState() {
+    if (widget.connection == null) {
+      connection = ConnectionUtils();
+    }
     super.initState();
   }
 }
