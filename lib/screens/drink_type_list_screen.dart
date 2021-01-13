@@ -145,6 +145,8 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
                                         MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                               DrinkListScreen(
+                                            connectionUtils:
+                                                widget.connectionUtils,
                                             drinkType: widget.drinkType,
                                             typeName: option.name,
                                           ),

@@ -23,6 +23,25 @@ import 'package:mockito/mockito.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
+  ConnectionUtils connectionUtils;
+
+  setUp(() {
+    final mockito = MockClient((http.Request request) {
+      http.Response response;
+      if (request.url.toString().contains('list.php?c=list')) {
+        response = http.Response(ApiResource.categoriesJson, 200);
+      } else if (request.url.toString().contains('list.php?g=list')) {
+        response = http.Response(ApiResource.glassesJson, 200);
+      } else if (request.url.toString().contains('list.php?i=list')) {
+        response = http.Response(ApiResource.ingredientsJson, 200);
+      } else {
+        response = http.Response(ApiResource.alcoholJson, 200);
+      }
+      return Future.value(response);
+    });
+    connectionUtils = ConnectionUtils(client: mockito);
+  });
+
   ///
   ///
   ///
@@ -41,28 +60,13 @@ void main() {
       'Deve filtrar a lista procurando pelo termo "Optional", verificar se apenas'
       '1 registro apareceu e então, voltar para a tela principal',
       (WidgetTester tester) async {
-    final mockito = MockClient((http.Request request) {
-      http.Response response;
-      if (request.url.toString().contains('list.php?c=list')) {
-        response = http.Response(ApiResource.categoriesJson, 200);
-      } else if (request.url.toString().contains('list.php?g=list')) {
-        response = http.Response(ApiResource.glassesJson, 200);
-      } else if (request.url.toString().contains('list.php?i=list')) {
-        response = http.Response(ApiResource.ingredientsJson, 200);
-      } else {
-        response = http.Response(ApiResource.alcoholJson, 200);
-      }
-      return Future.value(response);
-    });
-
-    await _createWidget(tester, mockito);
+    await _createWidget(tester, connectionUtils);
     await tester.tap(find.byKey(Key('Classificação')));
     await tester.pumpAndSettle();
     print('Teste rodando');
     expect(find.text('Alcoholic'), findsOneWidget);
     expect(find.text('Non alcoholic'), findsOneWidget);
     expect(find.text('Optional alcohol'), findsOneWidget);
-    expect(find.text('Classificação'), findsNothing);
 
     await tester.enterText(find.byKey(Key('search-field')), 'optional');
     await tester.pumpAndSettle();
@@ -73,41 +77,83 @@ void main() {
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
     expect(find.text('Cocktail DB'), findsOneWidget);
+  });
 
+  ///
+  ///
+  ///
+  testWidgets(
+      'Deve abrir a lista das bebidas filtradas por categoria,'
+      'Verificar se os 3 primeiros itens da lista correspondem com o teste,'
+      'Filtrar a lista procurando pela palavra "ordinary" e verificar'
+      'se existe apenas 1 item na lista apos filtrar'
+      'e então, deve clicar no botão de voltar e'
+      'verificar se o app parou na tela principal',
+      (WidgetTester tester) async {
+    await _createWidget(tester, connectionUtils);
     await tester.tap(find.byKey(Key('Categoria')));
     await tester.pumpAndSettle();
     expect(find.text('Ordinary Drink'), findsOneWidget);
     expect(find.text('Cocktail'), findsOneWidget);
     expect(find.text('Milk / Float / Shake'), findsOneWidget);
     await tester.enterText(find.byKey(Key('search-field')), 'ordinary');
+    await tester.pumpAndSettle();
     expect(find.text('Ordinary Drink'), findsOneWidget);
     expect(find.text('Cocktail'), findsNothing);
     expect(find.text('Milk / Float / Shake'), findsNothing);
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
     expect(find.text('Cocktail DB'), findsOneWidget);
+  });
 
+  ///
+  ///
+  ///
+  testWidgets(
+      'Deve abrir a lista das bebidas filtradas por copo,'
+      'Verificar se os 3 primeiros itens da lista correspondem com o teste,'
+      'Filtrar a lista procurando pela palavra "fashioned" e verificar'
+      'se existe apenas 1 item na lista apos filtrar'
+      'e então, deve clicar no botão de voltar e'
+      'verificar se o app parou na tela principal',
+      (WidgetTester tester) async {
+    await _createWidget(tester, connectionUtils);
     await tester.tap(find.byKey(Key('Copo')));
     await tester.pumpAndSettle();
     expect(find.text('Highball glass'), findsOneWidget);
     expect(find.text('Cocktail glass'), findsOneWidget);
     expect(find.text('Old-fashioned glass'), findsOneWidget);
     await tester.enterText(find.byKey(Key('search-field')), 'fashioned');
+    await tester.pumpAndSettle();
     expect(find.text('Old-fashioned glass'), findsOneWidget);
     expect(find.text('Highball glass'), findsNothing);
     expect(find.text('Cocktail glass'), findsNothing);
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
     expect(find.text('Cocktail DB'), findsOneWidget);
+  });
 
+  ///
+  ///
+  ///
+  testWidgets(
+      'Deve abrir a lista das bebidas filtradas por ingrediente,'
+      'Verificar se os 3 primeiros itens da lista correspondem com o teste,'
+      'Filtrar a lista procurando pela palavra "Applejack" e verificar'
+      'se existe apenas 1 item na lista apos filtrar'
+      'e então, deve clicar no botão de voltar e'
+      'verificar se o app parou na tela principal',
+      (WidgetTester tester) async {
+    await _createWidget(tester, connectionUtils);
     await tester.tap(find.byKey(Key('Ingrediente')));
     await tester.pumpAndSettle();
     expect(find.text('Light rum'), findsOneWidget);
     expect(find.text('Applejack'), findsOneWidget);
     expect(find.text('Gin'), findsOneWidget);
-    await tester.enterText(find.byKey(Key('search-field')), 'Applejack');
-    expect(find.text('Applejack'), findsOneWidget);
-    expect(find.text('Gin'), findsNothing);
+    await tester.enterText(find.byKey(Key('search-field')), 'gin');
+    await tester.pumpAndSettle();
+    expect(find.text('Gin'), findsOneWidget);
+    expect(find.text('Applejack'), findsNothing);
     expect(find.text('Light rum'), findsNothing);
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
@@ -115,7 +161,11 @@ void main() {
   });
 }
 
-Future<void> _createWidget(WidgetTester tester, http.Client mockClient) async {
+///
+///
+///
+Future<void> _createWidget(
+    WidgetTester tester, ConnectionUtils connectionUtils) async {
   await tester.pumpWidget(
     MaterialApp(
       title: 'Flutter Demo',
@@ -123,10 +173,9 @@ Future<void> _createWidget(WidgetTester tester, http.Client mockClient) async {
         primarySwatch: Colors.blue,
       ),
       home: MainScreen(
-        connection: ConnectionUtils(client: mockClient),
+        connection: connectionUtils,
       ),
     ),
   );
-
   await tester.pump();
 }
