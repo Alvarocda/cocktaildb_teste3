@@ -143,6 +143,15 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
                   ],
                 );
               }
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text(
+                    'Por favor, verifique sua conexão com a internet e tente novamente',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              );
             }
             return Loading(
               message: 'Carregando Drinks',

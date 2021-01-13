@@ -139,20 +139,21 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
                                 EntityBase option =
                                     filteredSnapshot.data[index];
                                 return ListTile(
-                                    title: Text(option.name),
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              DrinkListScreen(
-                                            connectionUtils:
-                                                widget.connectionUtils,
-                                            drinkType: widget.drinkType,
-                                            typeName: option.name,
-                                          ),
+                                  title: Text(option.name),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            DrinkListScreen(
+                                          connectionUtils:
+                                              widget.connectionUtils,
+                                          drinkType: widget.drinkType,
+                                          typeName: option.name,
                                         ),
-                                      );
-                                    });
+                                      ),
+                                    );
+                                  },
+                                );
                               },
                             );
                           }
@@ -161,6 +162,16 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
                       ),
                     )
                   ],
+                );
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      'Por favor, verifique sua conexão com a internet e tente novamente',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 );
               }
             }
