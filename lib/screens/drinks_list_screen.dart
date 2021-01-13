@@ -5,6 +5,7 @@ import 'package:app/models/api_response.dart';
 import 'package:app/models/drink.dart';
 import 'package:app/screens/drink_detail_screen.dart';
 import 'package:app/screens/drink_type_list_screen.dart';
+import 'package:app/utils/drink_search_delegate.dart';
 import 'package:app/widgets/drink_list_tile.dart';
 import 'package:app/widgets/filter_textfield.dart';
 import 'package:app/widgets/loading.dart';
@@ -83,6 +84,23 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Drinks'),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  showSearch(
+                    context: context,
+                    delegate: DrinkSearchDelegate(
+                      drinkList: _drinkList,
+                      selectedDrink: (Drink drink) {
+                        if (drink != null) {
+                          _openDrinkDetail(context, drink);
+                        }
+                      },
+                    ),
+                  );
+                })
+          ],
         ),
         body: FutureBuilder<List<Drink>>(
           future: _getDrinksList(),
@@ -91,18 +109,6 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
               if (snapshot.hasData) {
                 return Column(
                   children: <Widget>[
-                    FilterTextField(
-                      onChanged: (String value) {
-                        if (value != null && value.isNotEmpty) {
-                          _filteredDrinkListStream.add(_drinkList
-                              .where((Drink element) =>
-                                  element.name.toLowerCase().contains(value))
-                              .toList());
-                        } else {
-                          _filteredDrinkListStream.add(_drinkList);
-                        }
-                      },
-                    ),
                     Expanded(
                       child: StreamBuilder<List<Drink>>(
                         stream: _filteredDrinkListStream.stream,
@@ -121,16 +127,7 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
                                 return DrinkListTile(
                                   drink: drink,
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            DrinkDetailScreen(
-                                          connectionUtils:
-                                              widget.connectionUtils,
-                                          drink: drink,
-                                        ),
-                                      ),
-                                    );
+                                    _openDrinkDetail(context, drink);
                                   },
                                 );
                               },
@@ -157,6 +154,17 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
               message: 'Carregando Drinks',
             );
           },
+        ),
+      ),
+    );
+  }
+
+  void _openDrinkDetail(BuildContext context, Drink drink) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => DrinkDetailScreen(
+          connectionUtils: widget.connectionUtils,
+          drink: drink,
         ),
       ),
     );

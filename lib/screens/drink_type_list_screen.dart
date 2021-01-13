@@ -9,6 +9,7 @@ import 'package:app/models/glass.dart';
 import 'package:app/models/ingredient.dart';
 import 'package:app/screens/drinks_list_screen.dart';
 import 'package:app/utils/connection_utils.dart';
+import 'package:app/utils/entity_base_search_delegate.dart';
 import 'package:app/widgets/filter_textfield.dart';
 import 'package:app/widgets/loading.dart';
 import 'package:flutter/material.dart';
@@ -104,6 +105,22 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Tipos de drinks'),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  showSearch(
+                      context: context,
+                      delegate: EntityBaseSearchDelegate(
+                        entitiesList: _drinkTypeList,
+                        selectedType: (EntityBase entityBase) {
+                          if (entityBase != null) {
+                            _openDrinkList(context, entityBase.name);
+                          }
+                        },
+                      ));
+                })
+          ],
         ),
         body: FutureBuilder<List<EntityBase>>(
           future: _getDrinksTypes(),
@@ -113,19 +130,6 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
               if (snapshot.hasData) {
                 return Column(
                   children: <Widget>[
-                    FilterTextField(
-                      key: Key('search-field'),
-                      onChanged: (String value) {
-                        if (value != null && value.isNotEmpty) {
-                          _filteredResults.add(_drinkTypeList
-                              .where((EntityBase element) =>
-                                  element.name.toLowerCase().contains(value))
-                              .toList());
-                        } else {
-                          _filteredResults.add(_drinkTypeList);
-                        }
-                      },
-                    ),
                     Expanded(
                       child: StreamBuilder<List<EntityBase>>(
                         stream: _filteredResults.stream,
@@ -141,17 +145,7 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
                                 return ListTile(
                                   title: Text(option.name),
                                   onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            DrinkListScreen(
-                                          connectionUtils:
-                                              widget.connectionUtils,
-                                          drinkType: widget.drinkType,
-                                          typeName: option.name,
-                                        ),
-                                      ),
-                                    );
+                                    _openDrinkList(context, option.name);
                                   },
                                 );
                               },
@@ -181,6 +175,21 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
               message: 'Aguarde, carregando',
             );
           },
+        ),
+      ),
+    );
+  }
+
+  ///
+  ///
+  ///
+  void _openDrinkList(BuildContext context, String optionName) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => DrinkListScreen(
+          connectionUtils: widget.connectionUtils,
+          drinkType: widget.drinkType,
+          typeName: optionName,
         ),
       ),
     );
