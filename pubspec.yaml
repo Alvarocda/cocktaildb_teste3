@@ -24,6 +24,7 @@ dependencies:
   integration_test: 1.0.1
   # https://flutter.dev/docs/cookbook/testing/unit/mocking
   mockito: 4.1.3
+
   cupertino_icons: ^1.0.0
 
 dev_dependencies:

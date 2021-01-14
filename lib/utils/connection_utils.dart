@@ -1,7 +1,6 @@
 import 'package:app/abstract/abstract_connection.dart';
 import 'package:app/models/api_response.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 
 ///
 ///

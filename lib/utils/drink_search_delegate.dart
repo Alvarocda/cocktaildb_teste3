@@ -1,38 +1,54 @@
 import 'package:app/models/drink.dart';
-import 'package:app/models/entity_base.dart';
 import 'package:flutter/material.dart';
 
+///
+///
+///
 class DrinkSearchDelegate extends SearchDelegate<Drink> {
   final List<Drink> drinkList;
   final Function(Drink drink) selectedDrink;
   DrinkSearchDelegate({this.drinkList, this.selectedDrink})
       : super(searchFieldLabel: 'Buscar');
 
+  ///
+  ///
+  ///
   @override
   List<Widget> buildActions(BuildContext context) {
     return <Widget>[
       IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            query = '';
-          }),
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
     ];
   }
 
+  ///
+  ///
+  ///
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          close(context, null);
-        });
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
   }
 
+  ///
+  ///
+  ///
   @override
   Widget buildResults(BuildContext context) {
     return Container();
   }
 
+  ///
+  ///
+  ///
   @override
   Widget buildSuggestions(BuildContext context) {
     List<Drink> filteredDrinkList = drinkList

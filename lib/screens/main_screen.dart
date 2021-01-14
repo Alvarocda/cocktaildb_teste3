@@ -4,7 +4,6 @@ import 'package:app/screens/drink_type_list_screen.dart';
 import 'package:app/utils/connection_utils.dart';
 import 'package:app/widgets/options_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 ///
 ///

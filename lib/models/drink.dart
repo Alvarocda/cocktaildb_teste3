@@ -1,4 +1,3 @@
-import 'package:app/models/entity_base.dart';
 import 'package:app/models/ingredient.dart';
 
 ///

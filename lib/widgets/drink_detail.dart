@@ -6,7 +6,6 @@ import 'package:app/widgets/loading.dart';
 import 'package:app/widgets/rating_modal.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:rating_bar/rating_bar.dart';
 
 enum DrinkDetailStatus { viewing, sendingRate }
 
@@ -28,10 +27,16 @@ class DrinkDetail extends StatefulWidget {
   _DrinkDetailState createState() => _DrinkDetailState();
 }
 
+///
+///
+///
 class _DrinkDetailState extends State<DrinkDetail> {
   final StreamController<DrinkDetailStatus> _drinkDetailStatus =
       StreamController<DrinkDetailStatus>();
 
+  ///
+  ///
+  ///
   @override
   void initState() {
     _drinkDetailStatus.add(DrinkDetailStatus.viewing);

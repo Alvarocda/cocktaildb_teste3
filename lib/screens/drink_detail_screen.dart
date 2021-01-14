@@ -1,12 +1,10 @@
 import 'package:app/abstract/abstract_connection.dart';
 import 'package:app/models/api_response.dart';
 import 'package:app/models/drink.dart';
-import 'package:app/utils/connection_utils.dart';
 import 'package:app/widgets/drink_detail.dart';
 import 'package:app/widgets/ingredient_list.dart';
 import 'package:app/widgets/loading.dart';
 import 'package:flutter/material.dart';
-import 'package:rating_bar/rating_bar.dart';
 
 ///
 ///

@@ -8,9 +8,7 @@ import 'package:app/models/entity_base.dart';
 import 'package:app/models/glass.dart';
 import 'package:app/models/ingredient.dart';
 import 'package:app/screens/drinks_list_screen.dart';
-import 'package:app/utils/connection_utils.dart';
 import 'package:app/utils/entity_base_search_delegate.dart';
-import 'package:app/widgets/filter_textfield.dart';
 import 'package:app/widgets/loading.dart';
 import 'package:flutter/material.dart';
 
@@ -107,6 +105,7 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
           title: Text('Tipos de drinks'),
           actions: <Widget>[
             IconButton(
+                key: Key('search-button'),
                 icon: Icon(Icons.search),
                 onPressed: () {
                   showSearch(

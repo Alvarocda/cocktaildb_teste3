@@ -7,7 +7,6 @@ import 'package:app/screens/drink_detail_screen.dart';
 import 'package:app/screens/drink_type_list_screen.dart';
 import 'package:app/utils/drink_search_delegate.dart';
 import 'package:app/widgets/drink_list_tile.dart';
-import 'package:app/widgets/filter_textfield.dart';
 import 'package:app/widgets/loading.dart';
 import 'package:flutter/material.dart';
 
