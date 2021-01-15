@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:rating_bar/rating_bar.dart';
 
@@ -8,7 +10,7 @@ class RatingModal {
   ///
   ///
   ///
-  static Future<bool> show({
+  static Future<double> show({
     @required BuildContext context,
     String title = 'Avaliar drink',
     String affirmative = 'Confirmar',
@@ -17,14 +19,17 @@ class RatingModal {
   }) {
     Widget aff;
     Widget neg;
-
+    double rating = 0;
     aff = FlatButton(
-      onPressed: () => Navigator.of(context).pop(true),
+      onPressed: () {
+        print(rating);
+        Navigator.of(context).pop(rating);
+      },
       child: Text(affirmative),
     );
 
     neg = RaisedButton(
-      onPressed: () => Navigator.of(context).pop(false),
+      onPressed: () => Navigator.of(context).pop(7.0),
       child: Text(
         negative,
       ),
@@ -39,7 +44,8 @@ class RatingModal {
             content: Container(
               height: 50,
               child: RatingBar(
-                onRatingChanged: (_) {},
+                onRatingChanged: (double selectedRating) =>
+                    rating = selectedRating,
                 filledIcon: Icons.star,
                 emptyIcon: Icons.star_border,
                 filledColor: Colors.amber,

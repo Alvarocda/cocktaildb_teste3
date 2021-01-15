@@ -1,21 +1,18 @@
+import 'dart:math';
+
 import 'package:app/abstract/abstract_connection.dart';
 import 'package:app/main.dart';
 import 'package:app/models/api_response.dart';
 import 'package:app/screens/main_screen.dart';
 import 'package:app/utils/api_resource.dart';
 import 'package:app/utils/connection_utils.dart';
+import 'package:app/widgets/loading.dart';
 import 'package:app/widgets/options_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:mockito/mockito.dart';
-
-// class MockConnectionUtils extends Mock implements ConnectionUtils {
-//   http.Client client;
-//   MockConnectionUtils(this.client);
-// }
 
 ///
 ///
@@ -25,22 +22,32 @@ void main() {
 
   ConnectionUtils connectionUtils;
 
-  setUp(() {
-    final mockito = MockClient((http.Request request) {
-      http.Response response;
-      if (request.url.toString().contains('list.php?c=list')) {
-        response = http.Response(ApiResource.categoriesJson, 200);
-      } else if (request.url.toString().contains('list.php?g=list')) {
-        response = http.Response(ApiResource.glassesJson, 200);
-      } else if (request.url.toString().contains('list.php?i=list')) {
-        response = http.Response(ApiResource.ingredientsJson, 200);
-      } else {
-        response = http.Response(ApiResource.alcoholJson, 200);
-      }
-      return Future.value(response);
-    });
-    connectionUtils = ConnectionUtils(client: mockito);
-  });
+  setUp(
+    () {
+      final mockito = MockClient(
+        (http.Request request) {
+          http.Response response;
+          if (request.url.toString().contains('list.php?c=list')) {
+            response = http.Response(ApiResource.categoriesJson, 200);
+          } else if (request.url.toString().contains('list.php?g=list')) {
+            response = http.Response(ApiResource.glassesJson, 200);
+          } else if (request.url.toString().contains('list.php?i=list')) {
+            response = http.Response(ApiResource.ingredientsJson, 200);
+          } else if (request.url.toString().contains('list.php?a=list')) {
+            response = http.Response(ApiResource.alcoholJson, 200);
+          } else if (request.url
+              .toString()
+              .contains('filter.php?a=Alcoholic')) {
+            response = http.Response(ApiResource.alcoholicDrinks, 200);
+          } else if (request.url.toString().contains('lookup.php?i=14029')) {
+            response = http.Response(ApiResource.drinkDetail, 200);
+          }
+          return Future.value(response);
+        },
+      );
+      connectionUtils = ConnectionUtils(client: mockito);
+    },
+  );
 
   ///
   ///
@@ -169,6 +176,107 @@ void main() {
     expect(find.text('Light rum'), findsNothing);
     await tester.tap(find.byIcon(Icons.arrow_back));
     await tester.pumpAndSettle();
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.text('Cocktail DB'), findsOneWidget);
+  });
+
+  ///
+  ///
+  ///
+  testWidgets(
+      'Clica no botão de classificação na tela principal'
+      'Seleciona a opção Alcohol'
+      'Verifica se 3 drinks vão aparecer na tela'
+      'Seleciona o drink chamado \'57 Chevy with a White License Plate'
+      'Abre a tela de detalhes do drink'
+      'Navega para a tela de instrução de preparo'
+      'Verifica se as instruções estão aparecendo corretamente,'
+      'Navega para a tela de ingredientes e verifica se 3 ingredientes vão aparecer'
+      'Volta para a lista de bebidas '
+      'Volta para a tela principal do app', (WidgetTester tester) async {
+    await _createWidget(tester, connectionUtils);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(Key('Classificação')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Alcoholic'));
+    await tester.pumpAndSettle();
+    expect(find.text('\'57 Chevy with a White License Plate'), findsOneWidget);
+    expect(find.text('1-900-FUK-MEUP'), findsOneWidget);
+    expect(find.text('110 in the shade'), findsOneWidget);
+    await tester.tap(find.text('\'57 Chevy with a White License Plate'));
+    await tester.pumpAndSettle();
+    expect(find.byType(Tab), findsNWidgets(3));
+    expect(find.text('Detalhes'), findsOneWidget);
+    expect(find.text('Preparo'), findsOneWidget);
+    expect(find.text('Ingredientes'), findsOneWidget);
+    expect(find.text('\'57 Chevy with a White License Plate'), findsOneWidget);
+    expect(find.text('Cocktail'), findsOneWidget);
+    expect(find.text('Alcoholic'), findsOneWidget);
+    expect(find.text('Highball glass'), findsOneWidget);
+    expect(find.byIcon(Icons.share), findsOneWidget);
+    expect(find.byIcon(Icons.star), findsOneWidget);
+    await tester.tap(find.text('Preparo'));
+    await tester.pumpAndSettle();
+    expect(
+        find.text(
+            '1. Fill a rocks glass with ice 2.add white creme de cacao and vodka 3.stir'),
+        findsOneWidget);
+    await tester.tap(find.text('Ingredientes'));
+    await tester.pumpAndSettle();
+    expect(find.text('Creme de Cacao'), findsOneWidget);
+    expect(find.text('Vodka'), findsOneWidget);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.text('Drinks'), findsOneWidget);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.text('Tipos de drinks'), findsOneWidget);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.text('Cocktail DB'), findsOneWidget);
+  });
+
+  ///
+  ///
+  ///
+  testWidgets(
+      'Clica no botão de classificação na tela principal'
+      'Seleciona a opção Alcohol'
+      'Verifica se 3 drinks vão aparecer na tela'
+      'Seleciona o drink chamado \'57 Chevy with a White License Plate'
+      'Abre a tela de detalhes do drink'
+      'Navega para a tela de instrução de preparo'
+      'Verifica se as instruções estão aparecendo corretamente,'
+      'Navega para a tela de ingredientes e verifica se 3 ingredientes vão aparecer'
+      'Volta para a lista de bebidas '
+      'Volta para a tela principal do app', (WidgetTester tester) async {
+    await _createWidget(tester, connectionUtils);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(Key('Classificação')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Alcoholic'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('\'57 Chevy with a White License Plate'));
+    await tester.pumpAndSettle();
+    expect(find.byIcon(Icons.star), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.star));
+    expect(find.text('Avaliar Drink'), findsOneWidget);
+    expect(find.byType(FlatButton), findsOneWidget);
+    expect(find.byType(RaisedButton), findsOneWidget);
+    expect(find.byIcon(Icons.star_border), findsNWidgets(5));
+    await tester.tap(find.byType(FlatButton));
+    await tester.pumpAndSettle();
+    expect(find.byType(SnackBar), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.star_border));
+    await tester.pumpAndSettle();
+    expect(find.byType(Loading), findsOneWidget);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.text('Drinks'), findsOneWidget);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.text('Tipos de drinks'), findsOneWidget);
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
     expect(find.text('Cocktail DB'), findsOneWidget);

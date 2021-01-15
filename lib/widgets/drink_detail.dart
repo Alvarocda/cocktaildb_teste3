@@ -108,9 +108,9 @@ class _DrinkDetailState extends State<DrinkDetail> {
                       ),
                       ElevatedButton(
                         onPressed: () async {
-                          bool userRated =
+                          double userRating =
                               await RatingModal.show(context: context);
-                          if (userRated) {
+                          if (userRating > 0 && userRating < 6) {
                             _drinkDetailStatus
                                 .add(DrinkDetailStatus.sendingRate);
                             await Future.delayed(Duration(seconds: 5));
@@ -118,6 +118,15 @@ class _DrinkDetailState extends State<DrinkDetail> {
                             Scaffold.of(context).showSnackBar(
                               SnackBar(
                                 content: Text('Avaliação enviada com sucesso'),
+                              ),
+                            );
+                          } else if (userRating == 0) {
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Selecione pelo menos 1 ponto de classificação para avaliar',
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             );
                           }
