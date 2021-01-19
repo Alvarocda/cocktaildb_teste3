@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 ///
 class DrinkSearchDelegate extends SearchDelegate<Drink> {
   final List<Drink> drinkList;
-  final Function(Drink drink) selectedDrink;
-  DrinkSearchDelegate({this.drinkList, this.selectedDrink})
-      : super(searchFieldLabel: 'Buscar');
+  DrinkSearchDelegate({this.drinkList}) : super(searchFieldLabel: 'Buscar');
 
   ///
   ///
@@ -62,8 +60,7 @@ class DrinkSearchDelegate extends SearchDelegate<Drink> {
         return ListTile(
           title: Text(drink.name),
           onTap: () {
-            Navigator.of(context).pop();
-            selectedDrink(drink);
+            close(context, drink);
           },
         );
       },

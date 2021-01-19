@@ -85,20 +85,19 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
           title: Text('Drinks'),
           actions: <Widget>[
             IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {
-                  showSearch(
-                    context: context,
-                    delegate: DrinkSearchDelegate(
-                      drinkList: _drinkList,
-                      selectedDrink: (Drink drink) {
-                        if (drink != null) {
-                          _openDrinkDetail(context, drink);
-                        }
-                      },
-                    ),
-                  );
-                })
+              icon: Icon(Icons.search),
+              onPressed: () async {
+                Drink drink = await showSearch(
+                  context: context,
+                  delegate: DrinkSearchDelegate(
+                    drinkList: _drinkList,
+                  ),
+                );
+                if (drink != null) {
+                  _openDrinkDetail(context, drink);
+                }
+              },
+            )
           ],
         ),
         body: FutureBuilder<List<Drink>>(

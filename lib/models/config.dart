@@ -13,5 +13,8 @@ class Config {
 
   double width;
 
+  ///
+  ///
+  ///
   Config._internal();
 }

@@ -105,20 +105,20 @@ class _DrinkTypeListScreenState extends State<DrinkTypeListScreen> {
           title: Text('Tipos de drinks'),
           actions: <Widget>[
             IconButton(
-                key: Key('search-button'),
-                icon: Icon(Icons.search),
-                onPressed: () {
-                  showSearch(
-                      context: context,
-                      delegate: EntityBaseSearchDelegate(
-                        entitiesList: _drinkTypeList,
-                        selectedType: (EntityBase entityBase) {
-                          if (entityBase != null) {
-                            _openDrinkList(context, entityBase.name);
-                          }
-                        },
-                      ));
-                })
+              key: Key('search-button'),
+              icon: Icon(Icons.search),
+              onPressed: () async {
+                EntityBase selectedType = await showSearch(
+                  context: context,
+                  delegate: EntityBaseSearchDelegate(
+                    entitiesList: _drinkTypeList,
+                  ),
+                );
+                if (selectedType != null) {
+                  _openDrinkList(context, selectedType.name);
+                }
+              },
+            )
           ],
         ),
         body: FutureBuilder<List<EntityBase>>(

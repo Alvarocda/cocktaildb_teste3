@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 ///
 class EntityBaseSearchDelegate extends SearchDelegate<EntityBase> {
   final List<EntityBase> entitiesList;
-  final Function(EntityBase entityBase) selectedType;
-  EntityBaseSearchDelegate({this.entitiesList, this.selectedType})
+  EntityBaseSearchDelegate({this.entitiesList})
       : super(searchFieldLabel: 'Buscar');
 
   ///
@@ -62,8 +61,7 @@ class EntityBaseSearchDelegate extends SearchDelegate<EntityBase> {
         return ListTile(
           title: Text(entity.name),
           onTap: () {
-            Navigator.of(context).pop();
-            selectedType(entity);
+            close(context, entity);
           },
         );
       },
