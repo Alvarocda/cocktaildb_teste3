@@ -1,7 +1,6 @@
 ///
 ///
-/// Essa classe serve apenas como uma base de dados para o retorno do client http
-/// mockupeado
+/// Essa classe serve apenas como uma base de dados para o retorno do client http mockupeado usado nos testes de integração
 class ApiResource {
   static const String categoriesJson =
       "{\"drinks\":[{\"strCategory\":\"Ordinary Drink\"},{\"strCategory\":\"Cocktail\"},{\"strCategory\":\"Milk \/ Float \/ Shake\"},{\"strCategory\":\"Other\/Unknown\"},{\"strCategory\":\"Cocoa\"},{\"strCategory\":\"Shot\"},{\"strCategory\":\"Coffee \/ Tea\"},{\"strCategory\":\"Homemade Liqueur\"},{\"strCategory\":\"Punch \/ Party Drink\"},{\"strCategory\":\"Beer\"},{\"strCategory\":\"Soft Drink \/ Soda\"}]}";

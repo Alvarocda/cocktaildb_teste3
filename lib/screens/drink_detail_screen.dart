@@ -30,6 +30,9 @@ class DrinkDetailScreen extends StatefulWidget {
 ///
 ///
 class _DrinkDetailScreenState extends State<DrinkDetailScreen> {
+  ///
+  ///
+  ///
   Future<Drink> _getDrinkDetail() async {
     ApiResponse apiResponse;
     try {

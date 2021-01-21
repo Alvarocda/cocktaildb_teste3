@@ -236,51 +236,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Cocktail DB'), findsOneWidget);
   });
-
-  ///
-  ///
-  ///
-  testWidgets(
-      'Clica no botão de classificação na tela principal'
-      'Seleciona a opção Alcohol'
-      'Verifica se 3 drinks vão aparecer na tela'
-      'Seleciona o drink chamado \'57 Chevy with a White License Plate'
-      'Abre a tela de detalhes do drink'
-      'Navega para a tela de instrução de preparo'
-      'Verifica se as instruções estão aparecendo corretamente,'
-      'Navega para a tela de ingredientes e verifica se 3 ingredientes vão aparecer'
-      'Volta para a lista de bebidas '
-      'Volta para a tela principal do app', (WidgetTester tester) async {
-    await _createWidget(tester, connectionUtils);
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(Key('Classificação')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Alcoholic'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('\'57 Chevy with a White License Plate'));
-    await tester.pumpAndSettle();
-    expect(find.byIcon(Icons.star), findsOneWidget);
-    await tester.tap(find.byIcon(Icons.star));
-    expect(find.text('Avaliar Drink'), findsOneWidget);
-    expect(find.byType(FlatButton), findsOneWidget);
-    expect(find.byType(RaisedButton), findsOneWidget);
-    expect(find.byIcon(Icons.star_border), findsNWidgets(5));
-    await tester.tap(find.byType(FlatButton));
-    await tester.pumpAndSettle();
-    expect(find.byType(SnackBar), findsOneWidget);
-    await tester.tap(find.byIcon(Icons.star_border));
-    await tester.pumpAndSettle();
-    expect(find.byType(Loading), findsOneWidget);
-    await tester.tap(find.byType(BackButton));
-    await tester.pumpAndSettle();
-    expect(find.text('Drinks'), findsOneWidget);
-    await tester.tap(find.byType(BackButton));
-    await tester.pumpAndSettle();
-    expect(find.text('Tipos de drinks'), findsOneWidget);
-    await tester.tap(find.byType(BackButton));
-    await tester.pumpAndSettle();
-    expect(find.text('Cocktail DB'), findsOneWidget);
-  });
 }
 
 ///

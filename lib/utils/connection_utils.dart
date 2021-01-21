@@ -6,9 +6,12 @@ import 'package:http/http.dart' as http;
 ///
 ///
 class ConnectionUtils implements AbstractConnection {
-  static String _baseUrl = 'https://www.thecocktaildb.com/api/json/v1/1/';
+  static const String _baseUrl = 'https://www.thecocktaildb.com/api/json/v1/1/';
   http.Client client;
 
+  ///
+  ///
+  ///
   ConnectionUtils({this.client}) {
     if (client == null) {
       client = http.Client();

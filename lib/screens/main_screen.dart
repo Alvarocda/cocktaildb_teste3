@@ -1,5 +1,4 @@
 import 'package:app/abstract/abstract_connection.dart';
-import 'package:app/models/config.dart';
 import 'package:app/screens/drink_type_list_screen.dart';
 import 'package:app/utils/connection_utils.dart';
 import 'package:app/widgets/options_tile.dart';
@@ -27,7 +26,6 @@ class MainScreen extends StatefulWidget {
 ///
 ///
 class _MainScreenState extends State<MainScreen> {
-  Config _config;
   AbstractConnection connection;
 
   ///

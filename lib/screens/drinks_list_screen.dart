@@ -157,6 +157,9 @@ class _DrinkListScreenState extends State<DrinkListScreen> {
     );
   }
 
+  ///
+  ///
+  ///
   void _openDrinkDetail(BuildContext context, Drink drink) {
     Navigator.of(context).push(
       MaterialPageRoute(
