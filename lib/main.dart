@@ -11,9 +11,12 @@ void main({ConnectionUtils connectionUtils}) {
   ///
   ///
   runApp(MyApp());
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Color.fromRGBO(34, 150, 241, 1), // status bar color
-  ));
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+        statusBarColor: Color.fromRGBO(34, 150, 241, 1),
+        statusBarIconBrightness: Brightness.light // status bar color
+        ),
+  );
 }
 
 ///
