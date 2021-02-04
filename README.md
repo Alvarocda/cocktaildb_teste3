@@ -1,16 +1,40 @@
-# app
+# Cocktail App
 
-A new Flutter project.
+## Projeto de teste prático Desenvolvedor Mobile
 
-## Getting Started
+## Dados da inscrição
 
-This project is a starting point for a Flutter application.
+Nome: Álvaro Claro dos Anjos  
+Contato: (66) 9 9982-7576.  
+Github: <https://github.com/alvarocda>  
+Linkedin: <https://www.linkedin.com/in/alvarocda/>  
+Email: alvaro.claro@hotmail.com  
 
-A few resources to get you started if this is your first Flutter project:
+## Testes
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Para rodar testes unitários, rode o seguinte comando a partir da pasta raiz do projeto:  
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```ps
+  flutter test
+```  
+  
+Para rodar testes de integração, conecte um emulador ou um aparelho fisico com permissões de debugação e então, a partir da pasta raiz do projeto, rode o seguinte comando
+
+```cmd
+  flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart
+```  
+
+## Executando o aplicativo
+
+Para executar o aplicativo, precisamos fazer com que o flutter baixe todos os plugins necessários, para isso, rode o comando abaixo a partir da pasta raiz do projeto e espera o mesmo finalizar.
+
+```cmd
+  flutter pub get
+```
+
+Após rodar esse comando, inicie um emulador ou então, conecte ao computador um aparelho fisico com permissões de debugação e rode o seguinte comando a partir da pasta raiz do projeto:
+
+```cmd
+  flutter run
+```
+
