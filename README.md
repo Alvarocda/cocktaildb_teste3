@@ -37,4 +37,6 @@ Após rodar esse comando, inicie um emulador ou então, conecte ao computador um
 ```cmd
   flutter run
 ```
+## APK
+Os APKs podem ser encontrados através da seção de release do repositório (https://github.com/Alvarocda/cocktaildb_teste3/releases/tag/v1.0.4)
 
