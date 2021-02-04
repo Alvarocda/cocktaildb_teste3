@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app/models/drink.dart';
 import 'package:app/widgets/drink_detail_info.dart';
+import 'package:app/widgets/image_viewer.dart';
 import 'package:app/widgets/loading.dart';
 import 'package:app/widgets/rating_modal.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -72,10 +73,16 @@ class _DrinkDetailState extends State<DrinkDetail> {
                         },
                         imageBuilder: (BuildContext context,
                             ImageProvider imageProvider) {
-                          return Center(
-                            child: CircleAvatar(
-                              backgroundImage: imageProvider,
-                              radius: 100,
+                          return GestureDetector(
+                            onTap: () async {
+                              await ImageViewer.visualizeImage(
+                                  context: context, provider: imageProvider);
+                            },
+                            child: Center(
+                              child: CircleAvatar(
+                                backgroundImage: imageProvider,
+                                radius: 100,
+                              ),
                             ),
                           );
                         },
