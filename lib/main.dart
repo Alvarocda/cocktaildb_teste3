@@ -1,12 +1,11 @@
 import 'package:app/screens/main_screen.dart';
-import 'package:app/utils/connection_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 ///
 ///
 ///
-void main({ConnectionUtils connectionUtils}) {
+void main() {
   ///
   ///
   ///

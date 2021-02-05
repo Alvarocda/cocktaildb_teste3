@@ -1,11 +1,11 @@
+import 'package:app/models/entity_base.dart';
 import 'package:app/models/ingredient.dart';
 
 ///
 ///
 ///
-class Drink {
+class Drink extends EntityBase {
   int id;
-  String name;
   String thumb;
   String thumbPreview;
   String category;
@@ -18,7 +18,7 @@ class Drink {
   ///
   ///
   Drink(
-      {this.name,
+      {String name,
       this.id,
       this.thumb,
       this.thumbPreview,
@@ -26,7 +26,8 @@ class Drink {
       this.category,
       this.glass,
       this.ingredientList,
-      this.instruction});
+      this.instruction})
+      : super(name: name);
 
   ///
   ///

@@ -23,8 +23,8 @@ class ImageViewer {
             height: 350,
             width: 350,
             decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: provider, fit: BoxFit.cover, scale: 2.2),
+              image:
+                  DecorationImage(image: provider, fit: BoxFit.cover, scale: 1),
             ),
           ),
         );
